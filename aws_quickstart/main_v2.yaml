@@ -107,16 +107,16 @@ Resources:
         ExternalId: !GetAtt DatadogAPICall.Outputs.ExternalId
         IAMRoleName: !Ref IAMRoleName
         CloudSecurityPostureManagementPermissions: !If [CloudSecurityPostureManagementPermissions, true, false]
-        DdAWSAccountId: !If
+        DdAWSAccountId: !If 
           - IsAP1
           - "417141415827"
-          - !If
-            - IsGov
-            - !If
+          - !If 
               - IsAWSGovCloud
               - "065115117704"
-              - "392588925713"
-            - "464622532012"
+              - !If 
+                  - IsGov
+                  - "464622532012"
+                  - "392588925713"
   # The Lambda function to ship logs from S3 and CloudWatch, custom metrics and traces from Lambda functions to Datadog
   # https://github.com/DataDog/datadog-serverless-functions/tree/master/aws/logs_monitoring
   ForwarderStack:
